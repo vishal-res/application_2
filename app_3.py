@@ -34,7 +34,7 @@ from pyspark.sql.functions import *
 
 # data set name:- "enwiki-2013.txt"
 
-link_data = spark.read.text("/home/vishalp/Videos/assinment/enwiki-2013.txt").selectExpr("split(value, ' ') as link")
+link_data = spark.read.text("/home/enwiki-2013.txt").selectExpr("split(value, ' ') as link")
 
 
 
@@ -61,7 +61,7 @@ articles_records = filtered_links.select(filtered_links.link[0].cast("int").alia
 
 # data set name:- enwiki-2013-names.csv
 
-names_data = spark.read.csv("/home/vishalp/Videos/assinment/enwiki-2013-names.csv", header=True).withColumnRenamed('name','article_name')
+names_data = spark.read.csv("/home/enwiki-2013-names.csv", header=True).withColumnRenamed('name','article_name')
 
 
 
