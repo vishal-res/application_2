@@ -12,7 +12,7 @@
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Importing nessasary libraires ->-> note :- OS librairy is optional
+# Importing necessary libraires ->-> note :- OS librairy is optional
 
 import os
 import pyspark
@@ -67,7 +67,7 @@ names_data = spark.read.csv("/home/enwiki-2013-names.csv", header=True).withColu
 
 
 
-# Join link data with article names -->> joining two tables
+# Join link data with article names -->> joining two data frame
 
 linked_articles_with_names = articles_records.join(names_data, articles_records.from_article == names_data.node_id).select("to_article", "article_name")
 
