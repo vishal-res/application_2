@@ -34,19 +34,19 @@ from pyspark.sql.functions import *
 
 # data set name:- "enwiki-2013.txt"
 
-link_records = spark.read.text("/home/vishalp/Videos/assinment/enwiki-2013.txt").selectExpr("split(value, ' ') as link")
+link_records = spark.read.text("/home/enwiki-2013.txt").selectExpr("split(value, ' ') as link")
 
 
 
 #  Filter out comments and header
 
-filtered_links = link_records.filter(~(col("value").startswith("#") | (col("value") == "FromNodeId")))
+link_records = link_records.filter(~(col("value").startswith("#") | (col("value") == "FromNodeId")))
 
 
 
 # Extract article links
 
-articles_records = filtered_links.select(filtered_links.link[0].cast("int").alias("from_article"),
+link_records = link_records.select(filtered_links.link[0].cast("int").alias("from_article"),
                                          filtered_links.link[1].cast("int").alias("to_article"))
 
 
@@ -54,7 +54,7 @@ articles_records = filtered_links.select(filtered_links.link[0].cast("int").alia
 
 # data set name:- enwiki-2013-names.csv
 
-names_data = spark.read.csv("/home/vishalp/Videos/assinment/enwiki-2013-names.csv", header=True)
+names_data = spark.read.csv("/home/enwiki-2013-names.csv", header=True)
 
 
 # rename the columns
@@ -64,7 +64,7 @@ names_data = names_data.withColumnRenamed('node_id', 'to_article').withColumnRen
 
 # Join link data with article names -->> joining two tables
 
-linked_articles_with_names = linked_articles.join(names_data, linked_articles.from_article == names_data.article_id).select("to_article", "article_name")
+linked_articles_with_names = link_records.join(names_data, link_records.from_article == names_data.article_id).select("to_article", "article_name")
 
 
 
