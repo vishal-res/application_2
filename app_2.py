@@ -82,7 +82,7 @@ sorted_articles = article_counts.sort("count", ascending=False)
 
 # Take the top 1000 most linked articles
 
-top_1000_articles = sorted_articles.limit(10).collect()
+top_1000_articles = sorted_articles.limit(1000).collect()
 
 
 
