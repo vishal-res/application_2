@@ -64,7 +64,7 @@ names_data = names_data.withColumnRenamed('node_id', 'to_article').withColumnRen
 
 # Join link data with article names -->> joining two tables
 
-linked_articles_with_names = linked_articles.join(names_data, linked_articles.from_article == names_data.article_id)     .select("to_article", "article_name")
+linked_articles_with_names = linked_articles.join(names_data, linked_articles.from_article == names_data.article_id).select("to_article", "article_name")
 
 
 
@@ -82,7 +82,7 @@ sorted_articles = article_counts.sort("count", ascending=False)
 
 # Take the top 1000 most linked articles
 
-top_1000_articles = sorted_articles.limit(1000).collect()
+top_1000_articles = sorted_articles.limit(1000)
 
 
 
@@ -90,10 +90,13 @@ top_1000_articles = sorted_articles.limit(1000).collect()
 
 for article in top_1000_articles:
     print(article.article_name, article["count"])
+    
 
+# to display as a data frame
+
+top_1000_articles.show(truncate=False)
 
 
 # Stop the SparkSession
 
 spark.stop()
-
